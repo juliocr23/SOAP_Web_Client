@@ -1,0 +1,61 @@
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:sch="http://juliocrosario.com/exam/model/user.xsd" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://juliocrosario.com/exam/model/user.xsd" targetNamespace="http://juliocrosario.com/exam/model/user.xsd">
+    <wsdl:types>
+        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://juliocrosario.com/exam/model/user.xsd">
+            <xs:element name="InputRequest">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="exam" type="tns:exam"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:complexType name="exam">
+                <xs:sequence>
+                    <xs:element name="test1" type="xs:double"/>
+                    <xs:element name="test2" type="xs:double"/>
+                    <xs:element name="test3" type="xs:double"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:element name="OutputRequest">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="Grade" type="xs:double"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:message name="InputRequest">
+        <wsdl:part element="tns:InputRequest" name="InputRequest"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="OutputRequest">
+        <wsdl:part element="tns:OutputRequest" name="OutputRequest"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:portType name="UserServicePort">
+        <wsdl:operation name="Input">
+            <wsdl:input message="tns:InputRequest" name="InputRequest"> </wsdl:input>
+        </wsdl:operation>
+        <wsdl:operation name="Output">
+            <wsdl:input message="tns:OutputRequest" name="OutputRequest"> </wsdl:input>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="UserServicePortSoap11" type="tns:UserServicePort">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="Input">
+            <soap:operation soapAction=""/>
+            <wsdl:input name="InputRequest">
+                <soap:body use="literal"/>
+            </wsdl:input>
+        </wsdl:operation>
+        <wsdl:operation name="Output">
+            <soap:operation soapAction=""/>
+            <wsdl:input name="OutputRequest">
+                <soap:body use="literal"/>
+            </wsdl:input>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="UserServicePortService">
+        <wsdl:port binding="tns:UserServicePortSoap11" name="UserServicePortSoap11">
+            <soap:address location="http://localhost:8080/ws"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>
